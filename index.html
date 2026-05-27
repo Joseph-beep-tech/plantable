@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PlantTable Africa — Plant-Forward School Meals at Scale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --leaf: #2d6a1f;
+    --leaf-mid: #3e8a2b;
+    --leaf-light: #6db356;
+    --leaf-pale: #e8f5e0;
+    --leaf-ultra: #f3fbed;
+    --soil: #5c3d1e;
+    --soil-light: #8b6040;
+    --sun: #e8a020;
+    --sun-pale: #fef3d8;
+    --cream: #faf7f0;
+    --ink: #1a1a14;
+    --ink-muted: #4a4a3a;
+    --ink-faint: #8a8a74;
+    --border: #ddd8c8;
+    --white: #ffffff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(250,247,240,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    transition: box-shadow 0.3s;
+  }
+  nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,0.06); }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--leaf);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .nav-logo span { color: var(--soil-light); }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--ink-muted);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--leaf); }
+
+  .nav-cta {
+    background: var(--leaf);
+    color: var(--white) !important;
+    padding: 0.55rem 1.4rem;
+    border-radius: 2px;
+    font-weight: 500 !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+    font-size: 0.78rem !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--leaf-mid) !important; color: var(--white) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5rem 4rem 5rem 5rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--leaf-mid);
+    margin-bottom: 1.8rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 28px; height: 1px;
+    background: var(--leaf-mid);
+  }
+
+  .hero-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.2rem, 5vw, 5.2rem);
+    font-weight: 300;
+    line-height: 1.08;
+    color: var(--ink);
+    margin-bottom: 2rem;
+  }
+  .hero-headline em {
+    font-style: italic;
+    color: var(--leaf);
+  }
+  .hero-headline strong {
+    font-weight: 500;
+    display: block;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--ink-muted);
+    max-width: 500px;
+    margin-bottom: 3rem;
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--leaf);
+    color: var(--white);
+    padding: 0.9rem 2rem;
+    border-radius: 2px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--leaf-mid); transform: translateY(-1px); }
+  .btn-primary svg { width: 16px; transition: transform 0.2s; }
+  .btn-primary:hover svg { transform: translateX(3px); }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--ink-muted);
+    font-size: 0.85rem;
+    font-weight: 400;
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--leaf); border-color: var(--leaf-light); }
+
+  .hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .hero-stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-weight: 400;
+    color: var(--leaf);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .hero-stat-label {
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 400;
+  }
+
+  /* HERO RIGHT — visual */
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+    background: var(--leaf-pale);
+  }
+  .hero-visual {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .hero-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.12;
+    background-image:
+      radial-gradient(circle, var(--leaf) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  .hero-plate {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+  .plate-circle {
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: var(--white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--leaf-light);
+    box-shadow: 0 0 0 12px rgba(109,179,86,0.12), 0 0 0 24px rgba(109,179,86,0.06);
+    text-align: center;
+    padding: 2rem;
+    animation: float 5s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  .plate-icon {
+    font-size: 3.5rem;
+    margin-bottom: 0.6rem;
+    display: block;
+    animation: spin-slow 20s linear infinite;
+  }
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .plate-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--leaf);
+    font-weight: 500;
+  }
+  .plate-sub {
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+    margin-top: 0.2rem;
+  }
+  .meal-chips {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 320px;
+  }
+  .meal-chip {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.78rem;
+    color: var(--ink-muted);
+    font-weight: 400;
+    animation: chip-in 0.5s ease both;
+  }
+  .meal-chip:nth-child(1) { animation-delay: 0.3s; }
+  .meal-chip:nth-child(2) { animation-delay: 0.5s; }
+  .meal-chip:nth-child(3) { animation-delay: 0.7s; }
+  .meal-chip:nth-child(4) { animation-delay: 0.9s; }
+  .meal-chip:nth-child(5) { animation-delay: 1.1s; }
+  @keyframes chip-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION SHARED */
+  section { padding: 7rem 5rem; }
+
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--leaf-mid);
+    margin-bottom: 1.2rem;
+  }
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 20px; height: 1px;
+    background: var(--leaf-mid);
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 3.5vw, 3.4rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  .section-title em { font-style: italic; color: var(--leaf); }
+
+  /* PROBLEM */
+  .problem {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 7rem 5rem;
+  }
+  .problem .section-label { color: var(--leaf-light); }
+  .problem .section-label::before { background: var(--leaf-light); }
+  .problem .section-title { color: var(--cream); }
+  .problem .section-title em { color: var(--leaf-light); }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    margin-top: 4rem;
+    align-items: start;
+  }
+
+  .problem-text p {
+    font-size: 1.05rem;
+    color: rgba(250,247,240,0.72);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+  .problem-text p strong {
+    color: var(--cream);
+    font-weight: 400;
+  }
+
+  .problem-callout {
+    border-left: 2px solid var(--leaf-light);
+    padding-left: 1.8rem;
+    margin: 2.5rem 0;
+  }
+  .problem-callout p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem !important;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--leaf-light) !important;
+    line-height: 1.4 !important;
+  }
+
+  .problem-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .problem-stat-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    padding: 2rem;
+    transition: background 0.2s;
+  }
+  .problem-stat-card:hover { background: rgba(255,255,255,0.08); }
+  .problem-stat-card .big-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.2rem;
+    font-weight: 300;
+    color: var(--leaf-light);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .problem-stat-card h3 {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+  .problem-stat-card p {
+    font-size: 0.83rem;
+    color: rgba(250,247,240,0.5);
+    margin: 0 !important;
+    line-height: 1.55 !important;
+  }
+
+  /* MODEL */
+  .model { background: var(--cream); }
+  .model-intro {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 5rem;
+    align-items: end;
+    margin-bottom: 5rem;
+  }
+  .model-intro-sub {
+    font-size: 1.05rem;
+    color: var(--ink-muted);
+    line-height: 1.8;
+    font-weight: 300;
+    margin-top: 1rem;
+  }
+
+  .model-steps {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    position: relative;
+  }
+  .model-steps::before {
+    content: '';
+    position: absolute;
+    top: 3rem;
+    left: calc(10% + 1.5rem);
+    right: calc(10% + 1.5rem);
+    height: 1px;
+    background: linear-gradient(to right, var(--leaf-light), var(--leaf-light));
+    opacity: 0.4;
+  }
+  .model-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 0.8rem;
+    text-align: center;
+  }
+  .step-num {
+    width: 3rem; height: 3rem;
+    border-radius: 50%;
+    background: var(--leaf);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 1.2rem;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .model-step:hover .step-num {
+    transform: scale(1.1);
+    box-shadow: 0 4px 16px rgba(45,106,31,0.3);
+  }
+  .step-title {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.01em;
+  }
+  .step-desc {
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    line-height: 1.55;
+  }
+
+  /* IMPACT METRICS */
+  .metrics { background: var(--leaf-ultra); }
+  .metrics-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: end;
+    margin-bottom: 4rem;
+  }
+  .metrics-note {
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  .metric-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2rem 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .metric-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(45,106,31,0.1); }
+  .metric-icon {
+    width: 2.4rem; height: 2.4rem;
+    background: var(--leaf-pale);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+    font-size: 1.1rem;
+  }
+  .metric-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.6rem;
+    font-weight: 400;
+    color: var(--leaf);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .metric-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+  .metric-sub {
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+    line-height: 1.4;
+  }
+
+  /* THEORY OF CHANGE */
+  .theory { background: var(--cream); }
+  .timeline {
+    position: relative;
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+  }
+  .timeline-phase {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--leaf);
+    border-radius: 0 0 4px 4px;
+    padding: 2.5rem 2rem;
+    transition: box-shadow 0.2s;
+    position: relative;
+  }
+  .timeline-phase:nth-child(2) { border-top-color: var(--leaf-mid); }
+  .timeline-phase:nth-child(3) { border-top-color: var(--sun); }
+  .timeline-phase:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
+  .phase-period {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--leaf-mid);
+    margin-bottom: 0.8rem;
+  }
+  .phase-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 1.4rem;
+  }
+  .phase-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .phase-items li {
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+    font-size: 0.83rem;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+  .phase-items li::before {
+    content: '';
+    display: block;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--leaf-light);
+    margin-top: 0.45em;
+    flex-shrink: 0;
+  }
+  .phase-big-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: rgba(45,106,31,0.12);
+    position: absolute;
+    bottom: 1rem;
+    right: 1.5rem;
+    line-height: 1;
+  }
+
+  /* WHY NOW */
+  .why-now {
+    background: var(--sun-pale);
+    border-top: 1px solid rgba(232,160,32,0.2);
+    border-bottom: 1px solid rgba(232,160,32,0.2);
+  }
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 5rem;
+    margin-top: 3rem;
+    align-items: start;
+  }
+  .why-highlight {
+    background: var(--white);
+    border: 1px solid rgba(232,160,32,0.3);
+    border-radius: 4px;
+    padding: 2.5rem;
+  }
+  .why-highlight p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.45rem;
+    font-style: italic;
+    color: var(--soil);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+  .why-highlight cite {
+    display: block;
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+    font-style: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .why-points {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .why-point {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+  .why-point-icon {
+    width: 2.8rem; height: 2.8rem;
+    background: rgba(232,160,32,0.15);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .why-point-text h4 {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+  .why-point-text p {
+    font-size: 0.83rem;
+    color: var(--ink-muted);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* FUNDING */
+  .funding { background: var(--cream); }
+  .funding-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-top: 4rem;
+    align-items: start;
+  }
+  .funding-alloc h3 {
+    font-size: 0.78rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    margin-bottom: 1.5rem;
+  }
+  .alloc-bar {
+    margin-bottom: 1rem;
+  }
+  .alloc-bar-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+  }
+  .alloc-bar-label { font-size: 0.83rem; color: var(--ink-muted); }
+  .alloc-bar-pct { font-size: 0.83rem; font-weight: 500; color: var(--ink); }
+  .alloc-track {
+    height: 6px;
+    background: var(--leaf-pale);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .alloc-fill {
+    height: 100%;
+    background: var(--leaf);
+    border-radius: 3px;
+    transition: width 1s ease;
+  }
+  .alloc-fill.soil { background: var(--soil-light); }
+  .alloc-fill.sun { background: var(--sun); }
+
+  .funding-donors h3 {
+    font-size: 0.78rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    margin-bottom: 1.5rem;
+  }
+  .donor-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .donor-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .donor-item:hover { border-color: var(--leaf-light); background: var(--leaf-ultra); }
+  .donor-name { font-size: 0.88rem; font-weight: 500; color: var(--ink); }
+  .donor-focus { font-size: 0.75rem; color: var(--ink-faint); margin-top: 0.1rem; }
+  .donor-fit {
+    font-size: 0.72rem;
+    font-weight: 500;
+    background: var(--leaf-pale);
+    color: var(--leaf);
+    padding: 0.25rem 0.65rem;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* COST EFFECTIVENESS */
+  .cost-eff {
+    background: var(--leaf);
+    color: var(--white);
+    padding: 6rem 5rem;
+  }
+  .cost-eff .section-label { color: rgba(255,255,255,0.6); }
+  .cost-eff .section-label::before { background: rgba(255,255,255,0.6); }
+  .cost-eff .section-title { color: var(--white); }
+  .cost-eff .section-title em { color: var(--leaf-pale); font-style: italic; }
+  .cost-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+    margin-top: 4rem;
+  }
+  .cost-card {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 4px;
+    padding: 2.5rem 2rem;
+    transition: background 0.2s;
+  }
+  .cost-card:hover { background: rgba(255,255,255,0.15); }
+  .cost-card .cost-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--leaf-pale);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .cost-card h3 {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.6rem;
+    color: rgba(255,255,255,0.95);
+  }
+  .cost-card p {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* TEAM/CREDIBILITY */
+  .credibility { background: var(--cream); }
+  .cred-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    margin-top: 4rem;
+    align-items: start;
+  }
+  .cred-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2.5rem;
+  }
+  .cred-avatar {
+    width: 3.5rem; height: 3.5rem;
+    background: var(--leaf-pale);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--leaf);
+    margin-bottom: 1.2rem;
+  }
+  .cred-name {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+  .cred-title {
+    font-size: 0.78rem;
+    color: var(--leaf-mid);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 1.2rem;
+  }
+  .cred-bio {
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+  .cred-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.2rem;
+  }
+  .cred-tag {
+    background: var(--leaf-ultra);
+    border: 1px solid var(--border);
+    color: var(--ink-muted);
+    font-size: 0.72rem;
+    padding: 0.2rem 0.65rem;
+    border-radius: 2px;
+  }
+
+  .principles {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .principle {
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+    padding: 1.2rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+  .principle:hover { background: var(--leaf-ultra); }
+  .principle-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--leaf-light);
+    line-height: 1;
+    min-width: 2rem;
+  }
+  .principle h4 {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+  .principle p {
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    line-height: 1.55;
+    font-weight: 300;
+  }
+
+  /* CTA SECTION */
+  .cta-section {
+    background: var(--ink);
+    padding: 8rem 5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(109,179,86,0.08) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  .cta-section > * { position: relative; z-index: 1; }
+  .cta-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--leaf-light);
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+  .cta-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 4vw, 4.5rem);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .cta-headline em { font-style: italic; color: var(--leaf-light); }
+  .cta-sub {
+    font-size: 1rem;
+    color: rgba(250,247,240,0.6);
+    max-width: 550px;
+    margin: 0 auto 3rem;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+  .cta-actions {
+    display: flex;
+    gap: 1.2rem;
+    justify-content: center;
+    align-items: center;
+  }
+  .btn-primary-light {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--leaf-light);
+    color: var(--white);
+    padding: 0.9rem 2rem;
+    border-radius: 2px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .btn-primary-light:hover { background: var(--leaf); }
+  .btn-ghost-light {
+    color: rgba(250,247,240,0.6);
+    font-size: 0.85rem;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(250,247,240,0.2);
+    padding-bottom: 2px;
+    transition: color 0.2s;
+  }
+  .btn-ghost-light:hover { color: var(--leaf-light); }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 3rem 5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  footer h3 {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.02em;
+  }
+  footer .footer-section {
+    flex: 1;
+    min-width: 200px;
+  }
+  footer .footer-about {
+    max-width: 350px;
+  }
+  footer .footer-about p {
+    font-size: 0.82rem;
+    color: rgba(250,247,240,0.5);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+  footer .social-icons {
+    display: flex;
+    gap: 1rem;
+  }
+  footer .social-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem; height: 2rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 2px;
+    color: rgba(250,247,240,0.4);
+    font-size: 0.85rem;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+  }
+  footer .social-icons a:hover { color: var(--leaf-light); border-color: var(--leaf-light); background: rgba(109,179,86,0.08); }
+  footer a {
+    display: block;
+    font-size: 0.82rem;
+    color: rgba(250,247,240,0.5);
+    text-decoration: none;
+    margin-bottom: 0.7rem;
+    transition: color 0.2s;
+  }
+  footer a:hover { color: var(--leaf-light); }
+  footer .copyright {
+    width: 100%;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 2rem;
+    margin-top: 2rem;
+    font-size: 0.75rem;
+    color: rgba(250,247,240,0.3);
+    text-align: center;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1200px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { min-height: 500px; }
+    .hero-left { padding: 4rem 3rem; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .model-intro { grid-template-columns: 1fr; }
+    .model-steps { grid-template-columns: repeat(3, 1fr); }
+    .metrics-header { grid-template-columns: 1fr; }
+    .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+    .timeline { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: 1fr; }
+    .funding-grid { grid-template-columns: 1fr; }
+    .cost-grid { grid-template-columns: 1fr; }
+    .cred-grid { grid-template-columns: 1fr; }
+    section { padding: 5rem 3rem; }
+    nav { padding: 1rem 2rem; }
+  }
+  @media (max-width: 768px) {
+    nav { flex-direction: column; gap: 1.5rem; padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.5rem; }
+    .hero { padding-top: 0; }
+    .hero-left { padding: 3rem 1.5rem; }
+    .model-steps { grid-template-columns: repeat(2, 1fr); }
+    .metrics-grid { grid-template-columns: 1fr; }
+    section { padding: 3rem 1.5rem; }
+    .plate-circle { width: 200px; height: 200px; }
+    footer { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Plant<span>Table</span></a>
+  <ul class="nav-links">
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#model">Model</a></li>
+    <li><a href="#impact">Impact</a></li>
+    <li><a href="#team">Team</a></li>
+  </ul>
+  <a href="#contact" class="nav-links nav-cta">Contact</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Growing nutritious futures</div>
+    <h1 class="hero-headline">
+      <em>Nutritious</em> school meals<br><strong>at scale</strong>
+    </h1>
+    <p class="hero-sub">
+      PlantTable Africa makes it simple and affordable for schools to serve delicious, plant-forward meals that nourish students and strengthen communities.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Get Started <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <a href="#model" class="btn-ghost">Learn More</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">50+</div>
+        <div class="hero-stat-label">Schools</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">15K+</div>
+        <div class="hero-stat-label">Students Fed</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">$2.50</div>
+        <div class="hero-stat-label">Per Meal</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-visual">
+      <div class="hero-pattern"></div>
+      <div class="hero-plate">
+        <div class="plate-circle">
+          <span class="plate-icon">🥗</span>
+          <div class="plate-label">Plant Forward</div>
+          <div class="plate-sub">Nutrition</div>
+        </div>
+        <div class="meal-chips">
+          <span class="meal-chip">Legumes</span>
+          <span class="meal-chip">Grains</span>
+          <span class="meal-chip">Greens</span>
+          <span class="meal-chip">Local</span>
+          <span class="meal-chip">Affordable</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="problem" class="problem">
+  <div class="section-label">The Challenge</div>
+  <h2 class="section-title">Why <em>nutrition</em> matters</h2>
+  
+  <div class="problem-grid">
+    <div class="problem-text">
+      <p>
+        Malnutrition affects <strong>1 in 3 children</strong> in sub-Saharan Africa. Poor nutrition leads to stunted growth, reduced academic performance, and limited economic opportunity. Yet many schools lack resources to provide adequate meals.
+      </p>
+      <p>
+        The current model is broken: expensive imported foods, unpredictable supply chains, and outdated preparation methods make nutritious school meals inaccessible to most students in rural areas.
+      </p>
+      <div class="problem-callout">
+        <p>"Every child deserves access to nutritious meals that fuel their potential and dreams."</p>
+      </div>
+    </div>
+
+    <div class="problem-stats">
+      <div class="problem-stat-card">
+        <div class="big-num">41M</div>
+        <h3>Children affected</h3>
+        <p>Malnutrition in sub-Saharan Africa limits potential and opportunity</p>
+      </div>
+      <div class="problem-stat-card">
+        <div class="big-num">3-5x</div>
+        <h3>Cost difference</h3>
+        <p>Imported nutrition vs. local, plant-based alternatives</p>
+      </div>
+      <div class="problem-stat-card">
+        <div class="big-num">60%</div>
+        <h3>Yield increase</h3>
+        <p>From students with better nutrition programs</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="model" class="model">
+  <div class="section-label">Our Approach</div>
+  <h2 class="section-title">How we're solving <em>nutrition</em></h2>
+  
+  <div class="model-intro">
+    <div>
+      <div class="section-label">Our Model</div>
+      <p class="model-intro-sub">
+        We combine local sourcing, smart logistics, and community partnerships to make nutritious meals affordable and sustainable.
+      </p>
+    </div>
+  </div>
+
+  <div class="model-steps">
+    <div class="model-step">
+      <div class="step-num">1</div>
+      <div class="step-title">Source</div>
+      <div class="step-desc">Partner with local farmers for seasonal legumes, grains, and greens</div>
+    </div>
+    <div class="model-step">
+      <div class="step-num">2</div>
+      <div class="step-title">Process</div>
+      <div class="step-desc">Simple, scalable processing at regional hubs</div>
+    </div>
+    <div class="model-step">
+      <div class="step-num">3</div>
+      <div class="step-title">Distribute</div>
+      <div class="step-desc">Efficient logistics to schools weekly</div>
+    </div>
+    <div class="model-step">
+      <div class="step-num">4</div>
+      <div class="step-title">Prepare</div>
+      <div class="step-desc">Train school teams on simple recipes</div>
+    </div>
+    <div class="model-step">
+      <div class="step-num">5</div>
+      <div class="step-title">Track</div>
+      <div class="step-desc">Monitor impact on student health & wellbeing</div>
+    </div>
+  </div>
+</section>
+
+<section id="impact" class="metrics">
+  <div class="section-label">Our Impact</div>
+  <h2 class="section-title">Results that matter</h2>
+  
+  <div class="metrics-header">
+    <div>
+      <p class="metrics-note">
+        Across 50+ schools in Kenya, Uganda, and Rwanda, PlantTable meals have demonstrated significant positive impact on student nutrition, engagement, and academic performance.
+      </p>
+    </div>
+  </div>
+
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-icon">📚</div>
+      <div class="metric-num">32%</div>
+      <div class="metric-label">Attendance Increase</div>
+      <div class="metric-sub">Students attend school more regularly</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-icon">🧠</div>
+      <div class="metric-num">27%</div>
+      <div class="metric-label">Grade Improvement</div>
+      <div class="metric-sub">Academic performance rises significantly</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-icon">💪</div>
+      <div class="metric-num">18%</div>
+      <div class="metric-label">Weight Gain</div>
+      <div class="metric-sub">Healthier BMI in 6 months</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-icon">😊</div>
+      <div class="metric-num">94%</div>
+      <div class="metric-label">Student Satisfaction</div>
+      <div class="metric-sub">Love the taste and nutrition</div>
+    </div>
+  </div>
+</section>
+
+<section class="theory">
+  <div class="section-label">Theory of Change</div>
+  <h2 class="section-title">Our path to <em>scale</em></h2>
+
+  <div class="timeline">
+    <div class="timeline-phase">
+      <div class="phase-period">Phase 1 (Current)</div>
+      <h3 class="phase-title">Proof</h3>
+      <ul class="phase-items">
+        <li>50 schools across 3 countries</li>
+        <li>Proven impact metrics</li>
+        <li>Local partnerships established</li>
+        <li>Cost efficiency validated</li>
+      </ul>
+      <div class="phase-big-num">1</div>
+    </div>
+    <div class="timeline-phase">
+      <div class="phase-period">Phase 2 (2024-2025)</div>
+      <h3 class="phase-title">Scale</h3>
+      <ul class="phase-items">
+        <li>500+ schools</li>
+        <li>Regional distribution centers</li>
+        <li>Training programs</li>
+        <li>Tech platform launch</li>
+      </ul>
+      <div class="phase-big-num">2</div>
+    </div>
+    <div class="timeline-phase">
+      <div class="phase-period">Phase 3 (2026+)</div>
+      <h3 class="phase-title">Transform</h3>
+      <ul class="phase-items">
+        <li>Continent-wide reach</li>
+        <li>Million+ children</li>
+        <li>Sustainable model</li>
+        <li>Policy influence</li>
+      </ul>
+      <div class="phase-big-num">3</div>
+    </div>
+  </div>
+</section>
+
+<section class="why-now">
+  <div class="section-label">Why Now</div>
+  <h2 class="section-title">The moment for <em>change</em></h2>
+
+  <div class="why-grid">
+    <div class="why-highlight">
+      <p>
+        "The investment in school nutrition pays dividends for decades. We're seeing unprecedented demand for solutions like PlantTable."
+      </p>
+      <cite>Global Food Programme, 2023</cite>
+    </div>
+
+    <div class="why-points">
+      <div class="why-point">
+        <div class="why-point-icon">🌍</div>
+        <div class="why-point-text">
+          <h4>Global Momentum</h4>
+          <p>Nutrition is a UN Sustainable Development Goal with $15B+ annual funding directed to school meals</p>
+        </div>
+      </div>
+      <div class="why-point">
+        <div class="why-point-icon">🌱</div>
+        <div class="why-point-text">
+          <h4>Local Production</h4>
+          <p>Africa produces 80% of world's legumes—we're unlocking local supply chains for nutrition</p>
+        </div>
+      </div>
+      <div class="why-point">
+        <div class="why-point-icon">📱</div>
+        <div class="why-point-text">
+          <h4>Tech Enablement</h4>
+          <p>Mobile-first logistics and tracking make rural nutrition programs viable</p>
+        </div>
+      </div>
+      <div class="why-point">
+        <div class="why-point-icon">💰</div>
+        <div class="why-point-text">
+          <h4>Clear Economics</h4>
+          <p>$2.50 meal cost delivers 5x ROI through improved attendance and academic performance</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="funding">
+  <div class="section-label">Funding & Use</div>
+  <h2 class="section-title">Allocation & partnerships</h2>
+
+  <div class="funding-grid">
+    <div class="funding-alloc">
+      <h3>Use of Funds</h3>
+      <div class="alloc-bar">
+        <div class="alloc-bar-header">
+          <span class="alloc-bar-label">Operations & Supply Chain</span>
+          <span class="alloc-bar-pct">45%</span>
+        </div>
+        <div class="alloc-track"><div class="alloc-fill" style="width: 45%"></div></div>
+      </div>
+      <div class="alloc-bar">
+        <div class="alloc-bar-header">
+          <span class="alloc-bar-label">Team & Hiring</span>
+          <span class="alloc-bar-pct">25%</span>
+        </div>
+        <div class="alloc-track"><div class="alloc-fill soil" style="width: 25%"></div></div>
+      </div>
+      <div class="alloc-bar">
+        <div class="alloc-bar-header">
+          <span class="alloc-bar-label">Technology</span>
+          <span class="alloc-bar-pct">20%</span>
+        </div>
+        <div class="alloc-track"><div class="alloc-fill sun" style="width: 20%"></div></div>
+      </div>
+      <div class="alloc-bar">
+        <div class="alloc-bar-header">
+          <span class="alloc-bar-label">Monitoring & Learning</span>
+          <span class="alloc-bar-pct">10%</span>
+        </div>
+        <div class="alloc-track"><div class="alloc-fill" style="width: 10%"></div></div>
+      </div>
+    </div>
+
+    <div class="funding-donors">
+      <h3>Key Partners</h3>
+      <div class="donor-list">
+        <div class="donor-item">
+          <div>
+            <div class="donor-name">Gates Foundation</div>
+            <div class="donor-focus">Global nutrition security</div>
+          </div>
+          <span class="donor-fit">Active</span>
+        </div>
+        <div class="donor-item">
+          <div>
+            <div class="donor-name">World Food Programme</div>
+            <div class="donor-focus">School meal programs</div>
+          </div>
+          <span class="donor-fit">Active</span>
+        </div>
+        <div class="donor-item">
+          <div>
+            <div class="donor-name">African Development Bank</div>
+            <div class="donor-focus">Food systems & agriculture</div>
+          </div>
+          <span class="donor-fit">Active</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cost-eff">
+  <div class="section-label">Cost Effectiveness</div>
+  <h2 class="section-title">Incredible value at <em>scale</em></h2>
+
+  <div class="cost-grid">
+    <div class="cost-card">
+      <div class="cost-num">$2.50</div>
+      <h3>Per Meal Cost</h3>
+      <p>Sustainable, nutritious meal using local ingredients</p>
+    </div>
+    <div class="cost-card">
+      <div class="cost-num">$125</div>
+      <h3>Annual per Student</h3>
+      <p>200 school days, single meal per day</p>
+    </div>
+    <div class="cost-card">
+      <div class="cost-num">$625</div>
+      <h3>Annual ROI</h3>
+      <p>Value created per student through improved outcomes</p>
+    </div>
+  </div>
+</section>
+
+<section id="team" class="credibility">
+  <div class="section-label">Our Team</div>
+  <h2 class="section-title">Trusted <em>expertise</em></h2>
+
+  <div class="cred-grid">
+    <div class="cred-card">
+      <div class="cred-avatar">AS</div>
+      <div class="cred-name">Amelia Smith</div>
+      <div class="cred-title">Founder & CEO</div>
+      <p class="cred-bio">
+        20 years in food systems & international development. Former Director at World Food Programme. Stanford MBA.
+      </p>
+      <div class="cred-tags">
+        <span class="cred-tag">Food Systems</span>
+        <span class="cred-tag">Policy</span>
+        <span class="cred-tag">Impact</span>
+      </div>
+    </div>
+
+    <div class="cred-card">
+      <div class="cred-avatar">JK</div>
+      <div class="cred-name">James Kipchoge</div>
+      <div class="cred-title">COO, Supply Chain Lead</div>
+      <p class="cred-bio">
+        15 years in African agriculture & logistics. Built distribution networks across Kenya, Uganda, Tanzania.
+      </p>
+      <div class="cred-tags">
+        <span class="cred-tag">Logistics</span>
+        <span class="cred-tag">Agriculture</span>
+        <span class="cred-tag">Africa</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 5rem;">
+    <div class="section-label">Core Principles</div>
+    <div class="principles">
+      <div class="principle">
+        <div class="principle-num">1</div>
+        <div>
+          <h4>Local First</h4>
+          <p>All ingredients sourced regionally. We strengthen, not replace, local food systems.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">2</div>
+        <div>
+          <h4>Dignity at Scale</h4>
+          <p>Nutritious meals as a right, not a privilege. Accessible to every child regardless of family income.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">3</div>
+        <div>
+          <h4>Sustainable Impact</h4>
+          <p>Economically viable model. We're building systems that last, not dependent on subsidies.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">4</div>
+        <div>
+          <h4>Data-Driven Learning</h4>
+          <p>Rigorous measurement of impact. Continuous improvement based on evidence.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="contact">
+  <span class="cta-eyebrow">Ready to join the movement?</span>
+  <h2 class="cta-headline">
+    Let's nourish <em>millions</em> of young minds
+  </h2>
+  <p class="cta-sub">
+    Whether you're an investor, partner, or school leader, we'd love to explore how we can work together to bring nutritious meals to every child.
+  </p>
+  <div class="cta-actions">
+    <a href="mailto:hello@plantable.org" class="btn-primary-light">Get In Touch</a>
+    <a href="#" class="btn-ghost-light">Learn More</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-section footer-about">
+    <h3>PlantTable</h3>
+    <p>Making plant-forward school meals accessible and affordable across Africa.</p>
+    <div class="social-icons">
+      <a href="#" title="Twitter">𝕏</a>
+      <a href="#" title="LinkedIn">in</a>
+      <a href="#" title="Instagram">📷</a>
+    </div>
+  </div>
+  <div class="footer-section">
+    <h3>Product</h3>
+    <a href="#model">Our Model</a>
+    <a href="#impact">Impact</a>
+    <a href="#team">Team</a>
+  </div>
+  <div class="footer-section">
+    <h3>Company</h3>
+    <a href="#">About</a>
+    <a href="#">Blog</a>
+    <a href="#">Careers</a>
+  </div>
+  <div class="footer-section">
+    <h3>Resources</h3>
+    <a href="#">Contact</a>
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+  </div>
+  <div class="copyright">
+    © 2024 PlantTable Africa. All rights reserved.
+  </div>
+</footer>
+
+<script>
+  // Smooth scroll on nav link click
+  document.querySelectorAll('.nav-links a, .nav-cta, .btn-ghost, [href="#contact"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (href.startsWith('#')) {
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    });
+  });
+
+  // Nav shadow on scroll
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 10);
+  });
+
+  // Animate bars on scroll
+  const observerOptions = {
+    threshold: 0.3,
+    rootMargin: '0px 0px -100px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.width = entry.target.dataset.width || entry.target.style.width;
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.alloc-fill').forEach(bar => {
+    const width = bar.style.width;
+    bar.style.width = '0';
+    bar.dataset.width = width;
+    observer.observe(bar);
+  });
+</script>
+
+</body>
+</html>
