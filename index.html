@@ -998,135 +998,136 @@
     border-top: 1px solid rgba(255,255,255,0.06);
     padding: 3rem 5rem;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 2rem;
   }
-  footer h3 {
-    font-size: 0.9rem;
-    font-weight: 500;
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
     color: var(--cream);
-    margin-bottom: 1.5rem;
-    letter-spacing: 0.02em;
+    text-decoration: none;
   }
-  footer .footer-section {
-    flex: 1;
-    min-width: 200px;
+  .footer-logo span { color: var(--leaf-light); }
+  .footer-info {
+    font-size: 0.78rem;
+    color: rgba(250,247,240,0.35);
+    text-align: center;
+    line-height: 1.6;
   }
-  footer .footer-about {
-    max-width: 350px;
-  }
-  footer .footer-about p {
-    font-size: 0.82rem;
-    color: rgba(250,247,240,0.5);
-    line-height: 1.7;
-    margin-bottom: 1rem;
-  }
-  footer .social-icons {
+  .footer-links {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
   }
-  footer .social-icons a {
+  .footer-links a {
+    font-size: 0.78rem;
+    color: rgba(250,247,240,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--leaf-light); }
+
+  /* SCROLL ANIMATIONS */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .fade-up-delay-1 { transition-delay: 0.1s; }
+  .fade-up-delay-2 { transition-delay: 0.2s; }
+  .fade-up-delay-3 { transition-delay: 0.3s; }
+  .fade-up-delay-4 { transition-delay: 0.4s; }
+
+  /* DIVIDER */
+  .ornament {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2rem; height: 2rem;
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 2px;
-    color: rgba(250,247,240,0.4);
-    font-size: 0.85rem;
-    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    gap: 1rem;
+    padding: 1rem 0;
   }
-  footer .social-icons a:hover { color: var(--leaf-light); border-color: var(--leaf-light); background: rgba(109,179,86,0.08); }
-  footer a {
+  .ornament::before, .ornament::after {
+    content: '';
     display: block;
-    font-size: 0.82rem;
-    color: rgba(250,247,240,0.5);
-    text-decoration: none;
-    margin-bottom: 0.7rem;
-    transition: color 0.2s;
+    width: 60px; height: 1px;
+    background: var(--border);
   }
-  footer a:hover { color: var(--leaf-light); }
-  footer .copyright {
-    width: 100%;
-    border-top: 1px solid rgba(255,255,255,0.06);
-    padding-top: 2rem;
-    margin-top: 2rem;
-    font-size: 0.75rem;
-    color: rgba(250,247,240,0.3);
-    text-align: center;
+  .ornament-inner {
+    font-size: 0.8rem;
+    color: var(--leaf-light);
+    letter-spacing: 0.1em;
   }
 
-  /* RESPONSIVE */
-  @media (max-width: 1200px) {
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
     .hero { grid-template-columns: 1fr; }
-    .hero-right { min-height: 500px; }
-    .hero-left { padding: 4rem 3rem; }
-    .problem-grid { grid-template-columns: 1fr; }
-    .model-intro { grid-template-columns: 1fr; }
-    .model-steps { grid-template-columns: repeat(3, 1fr); }
-    .metrics-header { grid-template-columns: 1fr; }
-    .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero-right { min-height: 320px; }
+    .hero-left { padding: 4rem 1.5rem; }
+    .problem-grid, .model-intro, .metrics-header, .funding-grid, .cred-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .model-steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .model-steps::before { display: none; }
+    .metrics-grid { grid-template-columns: 1fr 1fr; }
     .timeline { grid-template-columns: 1fr; }
     .why-grid { grid-template-columns: 1fr; }
-    .funding-grid { grid-template-columns: 1fr; }
     .cost-grid { grid-template-columns: 1fr; }
-    .cred-grid { grid-template-columns: 1fr; }
-    section { padding: 5rem 3rem; }
-    nav { padding: 1rem 2rem; }
-  }
-  @media (max-width: 768px) {
-    nav { flex-direction: column; gap: 1.5rem; padding: 1rem 1.5rem; }
-    .nav-links { gap: 1.5rem; }
-    .hero { padding-top: 0; }
-    .hero-left { padding: 3rem 1.5rem; }
-    .model-steps { grid-template-columns: repeat(2, 1fr); }
-    .metrics-grid { grid-template-columns: 1fr; }
-    section { padding: 3rem 1.5rem; }
-    .plate-circle { width: 200px; height: 200px; }
-    footer { flex-direction: column; }
+    .cta-section { padding: 5rem 1.5rem; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 1.5rem; }
+    .hero-stats { gap: 1.5rem; }
   }
 </style>
 </head>
 <body>
 
-<nav>
-  <a href="#" class="nav-logo">Plant<span>Table</span></a>
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#" class="nav-logo">Plant<span>Table</span> Africa</a>
   <ul class="nav-links">
-    <li><a href="#problem">Problem</a></li>
-    <li><a href="#model">Model</a></li>
+    <li><a href="#problem">The Problem</a></li>
+    <li><a href="#model">Our Model</a></li>
     <li><a href="#impact">Impact</a></li>
-    <li><a href="#team">Team</a></li>
+    <li><a href="#theory">Vision</a></li>
+    <li><a href="#funding">Funding</a></li>
+    <li><a href="#contact" class="nav-cta">Partner With Us</a></li>
   </ul>
-  <a href="#contact" class="nav-links nav-cta">Contact</a>
 </nav>
 
-<div class="hero">
+<!-- HERO -->
+<section class="hero">
   <div class="hero-left">
-    <div class="hero-eyebrow">Growing nutritious futures</div>
+    <div class="hero-eyebrow">Nairobi, Kenya &nbsp;·&nbsp; East Africa Initiative</div>
     <h1 class="hero-headline">
-      <em>Nutritious</em> school meals<br><strong>at scale</strong>
+      Changing what<br>
+      <em>52 million children</em><br>
+      <strong>eat every day.</strong>
     </h1>
     <p class="hero-sub">
-      PlantTable Africa makes it simple and affordable for schools to serve delicious, plant-forward meals that nourish students and strengthen communities.
+      PlantTable Africa embeds plant-forward nutrition into East Africa's school feeding systems — shifting millions of meals through policy, not persuasion.
     </p>
     <div class="hero-actions">
-      <a href="#contact" class="btn-primary">Get Started <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-      <a href="#model" class="btn-ghost">Learn More</a>
+      <a href="#funding" class="btn-primary">
+        Partner With Us
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#model" class="btn-ghost">See our model ↓</a>
     </div>
     <div class="hero-stats">
       <div>
-        <div class="hero-stat-num">50+</div>
-        <div class="hero-stat-label">Schools</div>
+        <div class="hero-stat-num">52M</div>
+        <div class="hero-stat-label">Children served daily</div>
       </div>
       <div>
-        <div class="hero-stat-num">15K+</div>
-        <div class="hero-stat-label">Students Fed</div>
+        <div class="hero-stat-num">47</div>
+        <div class="hero-stat-label">Kenyan counties</div>
       </div>
       <div>
-        <div class="hero-stat-num">$2.50</div>
-        <div class="hero-stat-label">Per Meal</div>
+        <div class="hero-stat-num">$0.02</div>
+        <div class="hero-stat-label">Cost per meal shifted</div>
       </div>
     </div>
   </div>
@@ -1136,474 +1137,481 @@
       <div class="hero-pattern"></div>
       <div class="hero-plate">
         <div class="plate-circle">
-          <span class="plate-icon">🥗</span>
-          <div class="plate-label">Plant Forward</div>
-          <div class="plate-sub">Nutrition</div>
+          <span class="plate-icon">🌿</span>
+          <div class="plate-label">Plant-Forward Meals</div>
+          <div class="plate-sub">Locally sourced · Culturally familiar</div>
         </div>
         <div class="meal-chips">
-          <span class="meal-chip">Legumes</span>
-          <span class="meal-chip">Grains</span>
-          <span class="meal-chip">Greens</span>
-          <span class="meal-chip">Local</span>
-          <span class="meal-chip">Affordable</span>
+          <span class="meal-chip">Githeri</span>
+          <span class="meal-chip">Sukuma Wiki</span>
+          <span class="meal-chip">Kunde</span>
+          <span class="meal-chip">Sweet Potato</span>
+          <span class="meal-chip">Njugu</span>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<section id="problem" class="problem">
-  <div class="section-label">The Challenge</div>
-  <h2 class="section-title">Why <em>nutrition</em> matters</h2>
-  
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="section-label">The Overlooked Gap</div>
+  <h2 class="section-title">The food system <em>feeding the most children</em><br>is the one nobody is fixing.</h2>
+
   <div class="problem-grid">
     <div class="problem-text">
       <p>
-        Malnutrition affects <strong>1 in 3 children</strong> in sub-Saharan Africa. Poor nutrition leads to stunted growth, reduced academic performance, and limited economic opportunity. Yet many schools lack resources to provide adequate meals.
-      </p>
-      <p>
-        The current model is broken: expensive imported foods, unpredictable supply chains, and outdated preparation methods make nutritious school meals inaccessible to most students in rural areas.
+        East Africa's school feeding programmes serve over <strong>52 million children daily</strong>. They are government-managed, centrally procured, and policy-governed — meaning a single ministerial directive can shift the dietary composition of millions of meals overnight.
       </p>
       <div class="problem-callout">
-        <p>"Every child deserves access to nutritious meals that fuel their potential and dreams."</p>
+        <p>"The vast majority of plant-forward NGO funding is directed at consumer behaviour change in Europe and North America. The result is a profound gap."</p>
       </div>
+      <p>
+        Meanwhile, institutional school meals in the Global South — the single largest food system feeding children — are <strong>completely overlooked</strong> by the organisations best positioned to change it.
+      </p>
+      <p>
+        A search of major philanthropic databases reveals no dedicated funding streams for plant-forward school meal policy in Sub-Saharan Africa. This is a genuine white space — high-impact, underfunded, and directly aligned with the food system transformation mission.
+      </p>
     </div>
 
-    <div class="problem-stats">
-      <div class="problem-stat-card">
-        <div class="big-num">41M</div>
-        <h3>Children affected</h3>
-        <p>Malnutrition in sub-Saharan Africa limits potential and opportunity</p>
+    <div class="problem-stats fade-up">
+      <div class="problem-stat-card fade-up fade-up-delay-1">
+        <div class="big-num">52M+</div>
+        <h3>Children fed daily by school programmes</h3>
+        <p>Government-managed, centrally procured, and policy-governed across East Africa — the world's most scalable food system lever.</p>
       </div>
-      <div class="problem-stat-card">
-        <div class="big-num">3-5x</div>
-        <h3>Cost difference</h3>
-        <p>Imported nutrition vs. local, plant-based alternatives</p>
+      <div class="problem-stat-card fade-up fade-up-delay-2">
+        <div class="big-num">0</div>
+        <h3>Dedicated NGOs in this space</h3>
+        <p>No major organisation currently works on plant-forward school meal policy in Sub-Saharan Africa. This is a genuine funding and advocacy white space.</p>
       </div>
-      <div class="problem-stat-card">
-        <div class="big-num">60%</div>
-        <h3>Yield increase</h3>
-        <p>From students with better nutrition programs</p>
+      <div class="problem-stat-card fade-up fade-up-delay-3">
+        <div class="big-num">3×</div>
+        <h3>Dimensions of harm from inaction</h3>
+        <p>Animal welfare, environmental impact, and child health are all directly affected by institutional animal product procurement at scale.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="model" class="model">
-  <div class="section-label">Our Approach</div>
-  <h2 class="section-title">How we're solving <em>nutrition</em></h2>
-  
+<!-- MODEL -->
+<section class="model" id="model">
   <div class="model-intro">
     <div>
-      <div class="section-label">Our Model</div>
-      <p class="model-intro-sub">
-        We combine local sourcing, smart logistics, and community partnerships to make nutritious meals affordable and sustainable.
-      </p>
+      <div class="section-label">The PlantTable Model</div>
+      <h2 class="section-title">Policy-first.<br><em>Evidence-driven.</em><br>Built to scale.</h2>
     </div>
+    <p class="model-intro-sub">
+      Rather than relying on individual consumer choice or expensive food product development, we change what millions of children eat every day by redesigning the institutional menu — replacing 2–3 animal-product meals per week with nutritionally equivalent legume, grain, and vegetable alternatives sourced locally. Legumes, sweet potato, and local greens are cheaper than meat per calorie, and they meet government nutritional guidelines.
+    </p>
   </div>
 
   <div class="model-steps">
-    <div class="model-step">
+    <div class="model-step fade-up">
       <div class="step-num">1</div>
-      <div class="step-title">Source</div>
-      <div class="step-desc">Partner with local farmers for seasonal legumes, grains, and greens</div>
+      <div class="step-title">Ministry Partnership</div>
+      <div class="step-desc">Approach county education departments with policy proposals backed by nutritional evidence, cost analysis, and pilot data.</div>
     </div>
-    <div class="model-step">
+    <div class="model-step fade-up fade-up-delay-1">
       <div class="step-num">2</div>
-      <div class="step-title">Process</div>
-      <div class="step-desc">Simple, scalable processing at regional hubs</div>
+      <div class="step-title">Menu Redesign</div>
+      <div class="step-desc">Replace 2–3 animal-product meals per week with culturally familiar, locally sourced plant alternatives drawing on Kenya's rich culinary heritage.</div>
     </div>
-    <div class="model-step">
+    <div class="model-step fade-up fade-up-delay-2">
       <div class="step-num">3</div>
-      <div class="step-title">Distribute</div>
-      <div class="step-desc">Efficient logistics to schools weekly</div>
+      <div class="step-title">Cook Training</div>
+      <div class="step-desc">Ministry-accredited short course covering plant-based techniques, nutritional equivalency, and food safety. Certified cooks receive a recognised qualification.</div>
     </div>
-    <div class="model-step">
+    <div class="model-step fade-up fade-up-delay-3">
       <div class="step-num">4</div>
-      <div class="step-title">Prepare</div>
-      <div class="step-desc">Train school teams on simple recipes</div>
+      <div class="step-title">Measurement</div>
+      <div class="step-desc">Track meals replaced per child, nutritional outcomes (MUAC scores, micronutrient intake), and estimated carbon savings. All data published quarterly.</div>
     </div>
-    <div class="model-step">
+    <div class="model-step fade-up fade-up-delay-4">
       <div class="step-num">5</div>
-      <div class="step-title">Track</div>
-      <div class="step-desc">Monitor impact on student health & wellbeing</div>
+      <div class="step-title">Open Replication</div>
+      <div class="step-desc">All policy templates, menus, curriculum, and frameworks published under open licence — any partner NGO in Uganda, Tanzania, or Ethiopia can adopt the full model.</div>
     </div>
   </div>
 </section>
 
-<section id="impact" class="metrics">
-  <div class="section-label">Our Impact</div>
-  <h2 class="section-title">Results that matter</h2>
-  
+<!-- METRICS -->
+<section class="metrics" id="impact">
   <div class="metrics-header">
     <div>
-      <p class="metrics-note">
-        Across 50+ schools in Kenya, Uganda, and Rwanda, PlantTable meals have demonstrated significant positive impact on student nutrition, engagement, and academic performance.
-      </p>
+      <div class="section-label">Measurable Impact</div>
+      <h2 class="section-title">Every meal shifted is a<br><em>tracked unit of impact.</em></h2>
     </div>
+    <p class="metrics-note">
+      Impact is tracked in clearly defined units auditable against Ministry enrolment records. All data is published in quarterly open-access reports, giving donors and policymakers the evidence base required for renewal and scale-up grants. Year 1 targets are grounded in signed MOU commitments, not projections.
+    </p>
   </div>
 
   <div class="metrics-grid">
-    <div class="metric-card">
-      <div class="metric-icon">📚</div>
-      <div class="metric-num">32%</div>
-      <div class="metric-label">Attendance Increase</div>
-      <div class="metric-sub">Students attend school more regularly</div>
+    <div class="metric-card fade-up">
+      <div class="metric-icon">🏫</div>
+      <div class="metric-num">20+</div>
+      <div class="metric-label">Pilot schools</div>
+      <div class="metric-sub">Year 1 target across one Kenyan county, anchored by signed MOU.</div>
     </div>
-    <div class="metric-card">
-      <div class="metric-icon">🧠</div>
-      <div class="metric-num">27%</div>
-      <div class="metric-label">Grade Improvement</div>
-      <div class="metric-sub">Academic performance rises significantly</div>
+    <div class="metric-card fade-up fade-up-delay-1">
+      <div class="metric-icon">👩‍🍳</div>
+      <div class="metric-num">2,000</div>
+      <div class="metric-label">Cooks certified</div>
+      <div class="metric-sub">Ministry-accredited short course, Year 1. Professional incentive drives adoption.</div>
     </div>
-    <div class="metric-card">
-      <div class="metric-icon">💪</div>
-      <div class="metric-num">18%</div>
-      <div class="metric-label">Weight Gain</div>
-      <div class="metric-sub">Healthier BMI in 6 months</div>
+    <div class="metric-card fade-up fade-up-delay-2">
+      <div class="metric-icon">🌱</div>
+      <div class="metric-num">500K</div>
+      <div class="metric-label">Meals shifted per year</div>
+      <div class="metric-sub">Years 2–3 target across minimum 3 counties with adopted policy language.</div>
     </div>
-    <div class="metric-card">
-      <div class="metric-icon">😊</div>
-      <div class="metric-num">94%</div>
-      <div class="metric-label">Student Satisfaction</div>
-      <div class="metric-sub">Love the taste and nutrition</div>
+    <div class="metric-card fade-up fade-up-delay-3">
+      <div class="metric-icon">🌍</div>
+      <div class="metric-num">5M+</div>
+      <div class="metric-label">Annual meals by Year 7</div>
+      <div class="metric-sub">East Africa regional expansion via open-source toolkit. Government-channel scaling keeps marginal cost near zero.</div>
     </div>
   </div>
 </section>
 
-<section class="theory">
+<!-- THEORY OF CHANGE -->
+<section class="theory" id="theory">
   <div class="section-label">Theory of Change</div>
-  <h2 class="section-title">Our path to <em>scale</em></h2>
+  <h2 class="section-title">From one county<br>to a <em>continental reference model.</em></h2>
 
   <div class="timeline">
-    <div class="timeline-phase">
-      <div class="phase-period">Phase 1 (Current)</div>
-      <h3 class="phase-title">Proof</h3>
+    <div class="timeline-phase fade-up">
+      <div class="phase-period">Year 1 — Pilot</div>
+      <div class="phase-title">Prove the model</div>
       <ul class="phase-items">
-        <li>50 schools across 3 countries</li>
-        <li>Proven impact metrics</li>
-        <li>Local partnerships established</li>
-        <li>Cost efficiency validated</li>
+        <li>Signed MOU with one Kenyan county education department</li>
+        <li>Plant-forward menus in 20+ pilot schools</li>
+        <li>2,000+ school cooks trained and certified</li>
+        <li>Baseline nutritional and procurement data collected</li>
+        <li>Open-source toolkit published for partner NGO adoption</li>
       </ul>
-      <div class="phase-big-num">1</div>
+      <div class="phase-big-num">01</div>
     </div>
-    <div class="timeline-phase">
-      <div class="phase-period">Phase 2 (2024-2025)</div>
-      <h3 class="phase-title">Scale</h3>
+
+    <div class="timeline-phase fade-up fade-up-delay-1">
+      <div class="phase-period">Years 2–3 — Scale</div>
+      <div class="phase-title">Expand the policy</div>
       <ul class="phase-items">
-        <li>500+ schools</li>
-        <li>Regional distribution centers</li>
-        <li>Training programs</li>
-        <li>Tech platform launch</li>
+        <li>Policy language adopted in at least 3 counties</li>
+        <li>500,000+ animal-product meals replaced annually</li>
+        <li>First replication by a partner NGO in Uganda or Tanzania</li>
+        <li>Published impact report attracting follow-on funding from 2+ philanthropic donors</li>
       </ul>
-      <div class="phase-big-num">2</div>
+      <div class="phase-big-num">02</div>
     </div>
-    <div class="timeline-phase">
-      <div class="phase-period">Phase 3 (2026+)</div>
-      <h3 class="phase-title">Transform</h3>
+
+    <div class="timeline-phase fade-up fade-up-delay-2">
+      <div class="phase-period">Years 4–7 — Reference model</div>
+      <div class="phase-title">Institutional change</div>
       <ul class="phase-items">
-        <li>Continent-wide reach</li>
-        <li>Million+ children</li>
-        <li>Sustainable model</li>
-        <li>Policy influence</li>
+        <li>National-level school meal policy in Kenya amended to include plant-forward standards</li>
+        <li>5 million+ meals per year shifted across East Africa</li>
+        <li>Model adopted independently by government nutrition agencies</li>
+        <li>PlantTable Africa becomes the reference model for Sub-Saharan Africa</li>
       </ul>
-      <div class="phase-big-num">3</div>
+      <div class="phase-big-num">03</div>
     </div>
+  </div>
+
+  <div class="ornament" style="margin-top:4rem;">
+    <div class="ornament-inner">◆</div>
+  </div>
+
+  <div style="max-width:700px; margin:2rem auto 0; text-align:center;">
+    <p style="font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:300; font-style:italic; color:var(--ink-muted); line-height:1.5;">
+      "A consumer campaign to shift 5 million meals would require changing the behaviour of hundreds of thousands of individuals. A policy change in one county education department achieves the same shift automatically, because the decision is made once and applied across every enrolled school."
+    </p>
   </div>
 </section>
 
+<!-- WHY NOW -->
 <section class="why-now">
   <div class="section-label">Why Now</div>
-  <h2 class="section-title">The moment for <em>change</em></h2>
+  <h2 class="section-title">The policy architecture is being<br>written <em>right now.</em></h2>
 
   <div class="why-grid">
-    <div class="why-highlight">
-      <p>
-        "The investment in school nutrition pays dividends for decades. We're seeing unprecedented demand for solutions like PlantTable."
-      </p>
-      <cite>Global Food Programme, 2023</cite>
+    <div class="why-highlight fade-up">
+      <p>"Kenya's government launched a national school meals expansion in 2024 targeting 10 million additional children. The WFP's Home-Grown School Feeding initiative is actively seeking policy partners."</p>
+      <cite>The window to embed plant-forward language is now — before it is locked in for a decade.</cite>
     </div>
 
     <div class="why-points">
-      <div class="why-point">
-        <div class="why-point-icon">🌍</div>
+      <div class="why-point fade-up fade-up-delay-1">
+        <div class="why-point-icon">🏛️</div>
         <div class="why-point-text">
-          <h4>Global Momentum</h4>
-          <p>Nutrition is a UN Sustainable Development Goal with $15B+ annual funding directed to school meals</p>
+          <h4>Kenya's 2024 school meals expansion</h4>
+          <p>The government is scaling to 10 million additional children. This is the largest institutional food procurement expansion in East Africa in a generation — and the policy framework is being written today.</p>
         </div>
       </div>
-      <div class="why-point">
-        <div class="why-point-icon">🌱</div>
+      <div class="why-point fade-up fade-up-delay-2">
+        <div class="why-point-icon">🌐</div>
         <div class="why-point-text">
-          <h4>Local Production</h4>
-          <p>Africa produces 80% of world's legumes—we're unlocking local supply chains for nutrition</p>
+          <h4>WFP Home-Grown School Feeding</h4>
+          <p>The World Food Programme's flagship school meals programme is actively seeking policy partners for menu design. PlantTable Africa is structurally positioned to fill that role.</p>
         </div>
       </div>
-      <div class="why-point">
-        <div class="why-point-icon">📱</div>
+      <div class="why-point fade-up fade-up-delay-3">
+        <div class="why-point-icon">⚡</div>
         <div class="why-point-text">
-          <h4>Tech Enablement</h4>
-          <p>Mobile-first logistics and tracking make rural nutrition programs viable</p>
+          <h4>Zero competition for this policy space</h4>
+          <p>No major NGO or philanthropic funder is currently working on plant-forward school meal policy in Sub-Saharan Africa. First-mover advantage in policy design is profound — and fleeting.</p>
         </div>
       </div>
-      <div class="why-point">
-        <div class="why-point-icon">💰</div>
+      <div class="why-point fade-up fade-up-delay-4">
+        <div class="why-point-icon">📍</div>
         <div class="why-point-text">
-          <h4>Clear Economics</h4>
-          <p>$2.50 meal cost delivers 5x ROI through improved attendance and academic performance</p>
+          <h4>County relationships already exist</h4>
+          <p>The founding team is based in Nakuru with existing relationships with county government officials, school administrators, and community health workers across Central and Rift Valley Kenya.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="funding">
-  <div class="section-label">Funding & Use</div>
-  <h2 class="section-title">Allocation & partnerships</h2>
+<!-- FUNDING -->
+<section class="funding" id="funding">
+  <div class="section-label">Funding Strategy</div>
+  <h2 class="section-title">A capital-efficient model<br>designed for <em>follow-on scale.</em></h2>
 
   <div class="funding-grid">
-    <div class="funding-alloc">
-      <h3>Use of Funds</h3>
+    <div class="funding-alloc fade-up">
+      <h3>Seed Grant Allocation</h3>
+
       <div class="alloc-bar">
         <div class="alloc-bar-header">
-          <span class="alloc-bar-label">Operations & Supply Chain</span>
-          <span class="alloc-bar-pct">45%</span>
+          <span class="alloc-bar-label">Co-founder salaries (12 months)</span>
+          <span class="alloc-bar-pct">80%</span>
         </div>
-        <div class="alloc-track"><div class="alloc-fill" style="width: 45%"></div></div>
+        <div class="alloc-track"><div class="alloc-fill" style="width:80%"></div></div>
       </div>
+
       <div class="alloc-bar">
         <div class="alloc-bar-header">
-          <span class="alloc-bar-label">Team & Hiring</span>
-          <span class="alloc-bar-pct">25%</span>
+          <span class="alloc-bar-label">Ministry partnership & legal costs</span>
+          <span class="alloc-bar-pct">8%</span>
         </div>
-        <div class="alloc-track"><div class="alloc-fill soil" style="width: 25%"></div></div>
+        <div class="alloc-track"><div class="alloc-fill soil" style="width:8%"></div></div>
       </div>
+
       <div class="alloc-bar">
         <div class="alloc-bar-header">
-          <span class="alloc-bar-label">Technology</span>
-          <span class="alloc-bar-pct">20%</span>
+          <span class="alloc-bar-label">Pilot school operations</span>
+          <span class="alloc-bar-pct">6%</span>
         </div>
-        <div class="alloc-track"><div class="alloc-fill sun" style="width: 20%"></div></div>
+        <div class="alloc-track"><div class="alloc-fill soil" style="width:6%"></div></div>
       </div>
+
       <div class="alloc-bar">
         <div class="alloc-bar-header">
-          <span class="alloc-bar-label">Monitoring & Learning</span>
-          <span class="alloc-bar-pct">10%</span>
+          <span class="alloc-bar-label">Impact measurement & data tools</span>
+          <span class="alloc-bar-pct">4%</span>
         </div>
-        <div class="alloc-track"><div class="alloc-fill" style="width: 10%"></div></div>
+        <div class="alloc-track"><div class="alloc-fill sun" style="width:4%"></div></div>
+      </div>
+
+      <div class="alloc-bar">
+        <div class="alloc-bar-header">
+          <span class="alloc-bar-label">Open-source toolkit development</span>
+          <span class="alloc-bar-pct">2%</span>
+        </div>
+        <div class="alloc-track"><div class="alloc-fill sun" style="width:2%"></div></div>
+      </div>
+
+      <div style="margin-top:2rem; padding:1.5rem; background:var(--leaf-ultra); border:1px solid var(--border); border-radius:4px;">
+        <p style="font-size:0.8rem; color:var(--ink-muted); line-height:1.6;">
+          <strong style="font-weight:500; color:var(--ink);">Cost-effectiveness note:</strong> Once a county policy is amended, the cost per meal shifted is close to zero — procurement decisions are made centrally and automatically applied. Our model shows a cost-per-meal-shifted of under <strong style="color:var(--leaf);">$0.02 USD</strong> in Year 2.
+        </p>
       </div>
     </div>
 
-    <div class="funding-donors">
-      <h3>Key Partners</h3>
+    <div class="funding-donors fade-up fade-up-delay-1">
+      <h3>Follow-On Funding Pathway</h3>
       <div class="donor-list">
         <div class="donor-item">
           <div>
-            <div class="donor-name">Gates Foundation</div>
-            <div class="donor-focus">Global nutrition security</div>
+            <div class="donor-name">Open Philanthropy</div>
+            <div class="donor-focus">Animal welfare & food systems transformation</div>
           </div>
-          <span class="donor-fit">Active</span>
+          <div class="donor-fit">Strong fit</div>
         </div>
         <div class="donor-item">
           <div>
-            <div class="donor-name">World Food Programme</div>
-            <div class="donor-focus">School meal programs</div>
+            <div class="donor-name">EAT Foundation</div>
+            <div class="donor-focus">Institutional food systems programme</div>
           </div>
-          <span class="donor-fit">Active</span>
+          <div class="donor-fit">Direct align</div>
         </div>
         <div class="donor-item">
           <div>
-            <div class="donor-name">African Development Bank</div>
-            <div class="donor-focus">Food systems & agriculture</div>
+            <div class="donor-name">GiveWell Incubation</div>
+            <div class="donor-focus">Measurable, cost-effective, tractable outcomes</div>
           </div>
-          <span class="donor-fit">Active</span>
+          <div class="donor-fit">Strong fit</div>
+        </div>
+        <div class="donor-item">
+          <div>
+            <div class="donor-name">UK & EU Development Funds</div>
+            <div class="donor-focus">Bilateral education & nutrition programmes</div>
+          </div>
+          <div class="donor-fit">In-region</div>
+        </div>
+        <div class="donor-item">
+          <div>
+            <div class="donor-name">CGIAR Food Systems</div>
+            <div class="donor-focus">Research partnerships & in-kind co-funding</div>
+          </div>
+          <div class="donor-fit">Partner</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- COST EFFECTIVENESS -->
 <section class="cost-eff">
   <div class="section-label">Cost Effectiveness</div>
-  <h2 class="section-title">Incredible value at <em>scale</em></h2>
+  <h2 class="section-title">Institutional leverage makes this<br>among the <em>most cost-effective</em> food system interventions.</h2>
 
   <div class="cost-grid">
-    <div class="cost-card">
-      <div class="cost-num">$2.50</div>
-      <h3>Per Meal Cost</h3>
-      <p>Sustainable, nutritious meal using local ingredients</p>
+    <div class="cost-card fade-up">
+      <div class="cost-num">$0.02</div>
+      <h3>Cost per meal shifted — Year 2</h3>
+      <p>Once county policy is established, procurement decisions apply automatically across every enrolled school. The marginal cost of each additional meal shifted approaches zero.</p>
     </div>
-    <div class="cost-card">
-      <div class="cost-num">$125</div>
-      <h3>Annual per Student</h3>
-      <p>200 school days, single meal per day</p>
+    <div class="cost-card fade-up fade-up-delay-1">
+      <div class="cost-num">1→47</div>
+      <h3>County replication pathway</h3>
+      <p>Kenya pilot in one county scales to all 47 counties through the same policy template. Government-channel scaling means fixed cost amortises over exponentially more meals.</p>
     </div>
-    <div class="cost-card">
-      <div class="cost-num">$625</div>
-      <h3>Annual ROI</h3>
-      <p>Value created per student through improved outcomes</p>
+    <div class="cost-card fade-up fade-up-delay-2">
+      <div class="cost-num">0→∞</div>
+      <h3>Open-source regional multiplier</h3>
+      <p>Publishing the full toolkit under open licence means partner NGOs in Uganda, Tanzania, and Ethiopia can replicate the model at zero marginal cost to PlantTable Africa.</p>
     </div>
   </div>
 </section>
 
-<section id="team" class="credibility">
-  <div class="section-label">Our Team</div>
-  <h2 class="section-title">Trusted <em>expertise</em></h2>
+<!-- CREDIBILITY -->
+<section class="credibility">
+  <div class="section-label">Founding Team</div>
+  <h2 class="section-title">Built by people who<br><em>understand East Africa</em> from the inside.</h2>
 
   <div class="cred-grid">
-    <div class="cred-card">
-      <div class="cred-avatar">AS</div>
-      <div class="cred-name">Amelia Smith</div>
-      <div class="cred-title">Founder & CEO</div>
-      <p class="cred-bio">
-        20 years in food systems & international development. Former Director at World Food Programme. Stanford MBA.
-      </p>
-      <div class="cred-tags">
-        <span class="cred-tag">Food Systems</span>
-        <span class="cred-tag">Policy</span>
-        <span class="cred-tag">Impact</span>
+    <div>
+      <div class="cred-card fade-up" style="margin-bottom:1.5rem;">
+        <div class="cred-avatar">JM</div>
+        <div class="cred-name">Joseph Mwangi</div>
+        <div class="cred-title">Co-Founder · Nakuru, Kenya</div>
+        <div class="cred-bio">
+          Built and launched a multi-business WhatsApp AI platform from scratch — independently architecting backend infrastructure, integrating M-Pesa Daraja payments, and deploying a self-hosted system across multiple business clients. Existing relationships with county government officials and school administrators across Central and Rift Valley Kenya provide the fastest path to a credible pilot partnership.
+        </div>
+        <div class="cred-tags">
+          <span class="cred-tag">Systems architecture</span>
+          <span class="cred-tag">County government relations</span>
+          <span class="cred-tag">Nakuru-based</span>
+          <span class="cred-tag">Product delivery</span>
+        </div>
       </div>
     </div>
 
-    <div class="cred-card">
-      <div class="cred-avatar">JK</div>
-      <div class="cred-name">James Kipchoge</div>
-      <div class="cred-title">COO, Supply Chain Lead</div>
-      <p class="cred-bio">
-        15 years in African agriculture & logistics. Built distribution networks across Kenya, Uganda, Tanzania.
-      </p>
-      <div class="cred-tags">
-        <span class="cred-tag">Logistics</span>
-        <span class="cred-tag">Agriculture</span>
-        <span class="cred-tag">Africa</span>
-      </div>
-    </div>
-  </div>
-
-  <div style="margin-top: 5rem;">
-    <div class="section-label">Core Principles</div>
-    <div class="principles">
+    <div class="principles fade-up">
       <div class="principle">
-        <div class="principle-num">1</div>
+        <div class="principle-num">01</div>
         <div>
-          <h4>Local First</h4>
-          <p>All ingredients sourced regionally. We strengthen, not replace, local food systems.</p>
+          <h4>Policy-first, not product-first</h4>
+          <p>We change institutional menus, not consumer preferences. One county directive is worth ten thousand individual behaviour changes.</p>
         </div>
       </div>
       <div class="principle">
-        <div class="principle-num">2</div>
+        <div class="principle-num">02</div>
         <div>
-          <h4>Dignity at Scale</h4>
-          <p>Nutritious meals as a right, not a privilege. Accessible to every child regardless of family income.</p>
+          <h4>Evidence in public, always</h4>
+          <p>Quarterly open-access reports. All data auditable against Ministry enrolment records. No black boxes.</p>
         </div>
       </div>
       <div class="principle">
-        <div class="principle-num">3</div>
+        <div class="principle-num">03</div>
         <div>
-          <h4>Sustainable Impact</h4>
-          <p>Economically viable model. We're building systems that last, not dependent on subsidies.</p>
+          <h4>Culturally grounded</h4>
+          <p>Githeri, sukuma wiki, kunde, njugu — Kenya's culinary heritage is our menu. Palatability and cultural acceptance are not afterthoughts.</p>
         </div>
       </div>
       <div class="principle">
-        <div class="principle-num">4</div>
+        <div class="principle-num">04</div>
         <div>
-          <h4>Data-Driven Learning</h4>
-          <p>Rigorous measurement of impact. Continuous improvement based on evidence.</p>
+          <h4>Open by default</h4>
+          <p>Every template, curriculum, and framework published under open licence. Replication without reinvention is the whole point.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">05</div>
+        <div>
+          <h4>Integrity over optics</h4>
+          <p>We measure meals shifted, not press mentions. Impact is the audit, not the output.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- CTA -->
 <section class="cta-section" id="contact">
-  <span class="cta-eyebrow">Ready to join the movement?</span>
+  <span class="cta-eyebrow">Partner With PlantTable Africa</span>
   <h2 class="cta-headline">
-    Let's nourish <em>millions</em> of young minds
+    The opportunity is not to convince<br>
+    people to eat <em>differently.</em>
   </h2>
   <p class="cta-sub">
-    Whether you're an investor, partner, or school leader, we'd love to explore how we can work together to bring nutritious meals to every child.
+    It is to change what the institutions that feed them decide to cook. If you are a funder, policy partner, or NGO working in East Africa — we want to hear from you.
   </p>
   <div class="cta-actions">
-    <a href="mailto:hello@plantable.org" class="btn-primary-light">Get In Touch</a>
-    <a href="#" class="btn-ghost-light">Learn More</a>
+    <a href="mailto:hello@plantableafrica.org" class="btn-primary-light">
+      Get in touch
+      <svg width="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <a href="#model" class="btn-ghost-light">Read our model ↑</a>
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
-  <div class="footer-section footer-about">
-    <h3>PlantTable</h3>
-    <p>Making plant-forward school meals accessible and affordable across Africa.</p>
-    <div class="social-icons">
-      <a href="#" title="Twitter">𝕏</a>
-      <a href="#" title="LinkedIn">in</a>
-      <a href="#" title="Instagram">📷</a>
-    </div>
+  <a href="#" class="footer-logo">Plant<span>Table</span> Africa</a>
+  <div class="footer-info">
+    Nairobi, Kenya · Regional Scope: East Africa<br>
+    Nonprofit Initiative · Founded 2024
   </div>
-  <div class="footer-section">
-    <h3>Product</h3>
-    <a href="#model">Our Model</a>
+  <div class="footer-links">
+    <a href="#problem">Problem</a>
+    <a href="#model">Model</a>
     <a href="#impact">Impact</a>
-    <a href="#team">Team</a>
-  </div>
-  <div class="footer-section">
-    <h3>Company</h3>
-    <a href="#">About</a>
-    <a href="#">Blog</a>
-    <a href="#">Careers</a>
-  </div>
-  <div class="footer-section">
-    <h3>Resources</h3>
-    <a href="#">Contact</a>
-    <a href="#">Privacy</a>
-    <a href="#">Terms</a>
-  </div>
-  <div class="copyright">
-    © 2024 PlantTable Africa. All rights reserved.
+    <a href="#funding">Funding</a>
+    <a href="mailto:hello@plantableafrica.org">Contact</a>
   </div>
 </footer>
 
 <script>
-  // Smooth scroll on nav link click
-  document.querySelectorAll('.nav-links a, .nav-cta, .btn-ghost, [href="#contact"]').forEach(link => {
-    link.addEventListener('click', (e) => {
-      const href = link.getAttribute('href');
-      if (href.startsWith('#')) {
-        const target = document.querySelector(href);
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
-    });
-  });
-
-  // Nav shadow on scroll
+  // Nav scroll effect
+  const nav = document.getElementById('main-nav');
   window.addEventListener('scroll', () => {
-    document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 10);
+    nav.classList.toggle('scrolled', window.scrollY > 40);
   });
 
-  // Animate bars on scroll
-  const observerOptions = {
-    threshold: 0.3,
-    rootMargin: '0px 0px -100px 0px'
-  };
-
+  // Scroll fade-in animations
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.style.width = entry.target.dataset.width || entry.target.style.width;
-        observer.unobserve(entry.target);
+        entry.target.classList.add('visible');
       }
     });
-  }, observerOptions);
+  }, { threshold: 0.15 });
 
-  document.querySelectorAll('.alloc-fill').forEach(bar => {
-    const width = bar.style.width;
-    bar.style.width = '0';
-    bar.dataset.width = width;
-    observer.observe(bar);
-  });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 </script>
-
 </body>
 </html>
